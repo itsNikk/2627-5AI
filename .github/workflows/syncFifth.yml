@@ -23,7 +23,7 @@ jobs:
 
       - name: Sync source files
         run: |
-          mkdir -p destination/TPSI/5AI
+          mkdir -p destination/TPSI/${{ github.event.repository.name }}
           rsync -av --delete \
             --exclude='.git' \
             --exclude='.github' \
@@ -38,7 +38,7 @@ jobs:
             --exclude='.env' \
             --exclude='.env.local' \
             --exclude='.DS_Store' \
-            ./ destination/TPSI/5AI/
+            ./ destination/TPSI/${{ github.event.repository.name }}/
 
       - name: Commit and push
         run: |
