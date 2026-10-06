@@ -27,7 +27,7 @@ function compute(f, a, b) {
     return f(a, b)
 }
 
-//Come controllo il btn?
+//Come controllo il btn? AEL
 calcolBtn.addEventListener("click", function () {
     //prendere primo numero
     const a = Number(n1Elem.value)
