@@ -4,13 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="calculator_v2.js" defer></script>
+    <script src="calculator_v3.js" defer></script>
     <title>Document</title>
 </head>
 
 <body>
     <label for="n1">Primo numero:
-        <input type="number" id="n1">
+        <input type="number" id="n1" placeholder="Inserisci primo numero">
     </label>
     <br><br>
     <label for="operation">
@@ -19,16 +19,21 @@
             <option value="+">+</option>
             <option value="-">-</option>
             <option value="/">/</option>
+            <option value="**">**</option>
+            <option value="max">max</option>
+            <option value="min">min</option>
+            <option value="avg">media</option>
         </select>
     </label>
     <br><br>
     <label for="n2">Secondo numero:
-        <input type="number" id="n2">
+        <input type="number" id="n2" placeholder="Inserisci secondo numero">
     </label>
     <br>
     <button id="calcolaBtn">Calcola</button>
     <h3>Risultato</h3>
     <p id="result"></p>
+    <p id="error"></p>
 </body>
 
 </html>
