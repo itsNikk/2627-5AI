@@ -32,3 +32,10 @@ calcolBtn.addEventListener("click", function () {
         resElem.textContent = err.message
     }
 })
+
+//Eseguo quando HTML è renderizzato
+document.addEventListener("DOMContentLoaded", () => {
+    //setTimeout setInterval
+    setTimeout(() => console.log("qui"), 2000)
+    setInterval(() => console.log("repetion"), 500)
+})
