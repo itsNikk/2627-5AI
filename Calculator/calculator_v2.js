@@ -54,6 +54,4 @@ n1Elem.addEventListener("input", (e) => {
         //n1Elem.readOnly = true
         n1Elem.value = v.slice(0, 10)
     }
-    console.log(typeof v);
-
 })
