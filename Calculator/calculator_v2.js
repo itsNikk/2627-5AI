@@ -49,7 +49,6 @@ document.addEventListener("DOMContentLoaded", () => {
 n1Elem.addEventListener("input", (e) => {
     let v = e.target.value
     if (v.length >= 10) {
-        console.log("dgsdafgfadfdghsadfg");
         //n1Elem.disabled = true
         //n1Elem.readOnly = true
         n1Elem.value = v.slice(0, 10)
