@@ -5,6 +5,8 @@ const calcolBtn = document.getElementById("calcolaBtn")
 const op = document.getElementById("operation");
 const resElem = document.getElementById("result")
 
+let interval;
+
 //JS OBJ = hashmap -> K,V
 const operations = {
     '+': (a, b) => a + b,
@@ -31,11 +33,27 @@ calcolBtn.addEventListener("click", function () {
     } catch (err) {
         resElem.textContent = err.message
     }
+    clearInterval(interval);
+
 })
 
 //Eseguo quando HTML è renderizzato
 document.addEventListener("DOMContentLoaded", () => {
     //setTimeout setInterval
+    let i = 0
+
     setTimeout(() => console.log("qui"), 2000)
-    setInterval(() => console.log("repetion"), 500)
+    //interval = setInterval(() => console.log("repetion"), 500)
+})
+
+n1Elem.addEventListener("input", (e) => {
+    let v = e.target.value
+    if (v.length >= 10) {
+        console.log("dgsdafgfadfdghsadfg");
+        //n1Elem.disabled = true
+        //n1Elem.readOnly = true
+        n1Elem.value = v.slice(0, 10)
+    }
+    console.log(typeof v);
+
 })
