@@ -4,7 +4,6 @@ const calcolBtn = document.getElementById("calcolaBtn")
 
 const op = document.getElementById("operation");
 const resElem = document.getElementById("result")
-const errElem = document.getElementById("error")
 
 let interval;
 
@@ -14,19 +13,16 @@ const operations = {
     '-': (a, b) => a - b,
     '/': (a, b) => {
         if (b === 0) throw new Error("Denominator is zero.")
-        return a / b
+        return a / b;
+    },
+    '%': (a, b) => {
+        if (b === 0) throw new Error("Divisione per zero.")
+        return a % b;
     },
     '**': (a, b) => a ** b,
-    'min': (a, b) => a < b ? a : b,
-    'max': (a, b) => a > b ? a : b,
-    'avg': (a, b) => (a + b) / 2
-}
-
-//Not the usual one... ;)
-function chooseOp(symbol) {
-    const op = operations[symbol]
-    if (op === undefined) throw new Error("Operation not recognised: " + symbol)
-    return op
+    'max': (a, b) => Math.max(a, b),
+    'min': (a, b) => Math.min(a, b),
+    'media': (a, b) => (a + b) / 2
 }
 
 function compute(f, a, b) {
@@ -40,10 +36,10 @@ calcolBtn.addEventListener("click", function () {
     const b = Number(n2Elem.value)
 
     try {
-        const res = compute(chooseOp[op.value], a, b)
+        const res = compute(operations[op.value], a, b)
         resElem.textContent = res
     } catch (err) {
-        errElem.textContent = err.message
+        resElem.textContent = err.message
     }
     clearInterval(interval);
 
@@ -53,7 +49,6 @@ calcolBtn.addEventListener("click", function () {
 document.addEventListener("DOMContentLoaded", () => {
     //setTimeout setInterval
     let i = 0
-
     setTimeout(() => console.log("qui"), 2000)
     //interval = setInterval(() => console.log("repetion"), 500)
 })
