@@ -13,16 +13,17 @@ const operations = {
     '-': (a, b) => a - b,
     '/': (a, b) => {
         if (b === 0) throw new Error("Denominator is zero.")
-        return a / b;
+        return a / b
     },
-    '%': (a, b) => {
-        if (b === 0) throw new Error("Divisione per zero.")
-        return a % b;
-    },
-    '**': (a, b) => a ** b,
-    'max': (a, b) => Math.max(a, b),
-    'min': (a, b) => Math.min(a, b),
-    'media': (a, b) => (a + b) / 2
+    'max': (a, b) => a > b ? a : b,
+    'min': (n, m) => Math.min(n, m)
+}
+
+function scegliOperazione(simbolo) {
+    const v = operations[simbolo]; //undefined se !Key
+    if (v === undefined)
+        throw new Error("Operazione non supportata: " + simbolo)
+    return v;
 }
 
 function compute(f, a, b) {
@@ -49,6 +50,7 @@ calcolBtn.addEventListener("click", function () {
 document.addEventListener("DOMContentLoaded", () => {
     //setTimeout setInterval
     let i = 0
+
     setTimeout(() => console.log("qui"), 2000)
     //interval = setInterval(() => console.log("repetion"), 500)
 })
