@@ -12,14 +12,20 @@ let interval;
 
 //JS OBJ = hashmap -> K,V
 const operations = {
-    '+': (a, b) => a + b,
+   '+': (a, b) => a + b,
     '-': (a, b) => a - b,
+    '*': (a, b) => a * b,
     '/': (a, b) => {
         if (b === 0) throw new Error("Denominator is zero.")
         return a / b
     },
+    '%': (a, b) => {
+        if (b === 0) throw new Error("Denominator is zero.")
+        return a % b
+    },
     'max': (a, b) => a > b ? a : b,
-    'min': (n, m) => Math.min(n, m)
+    'min': (n, m) => Math.min(n, m),
+    'media': (a, b) => (a + b) / 2
 }
 
 const keyMap = {
@@ -62,8 +68,7 @@ sumBtn.addEventListener("click", forOperation(sumBtn.textContent))
 
 function scegliOperazione(simbolo) {
     const v = operations[simbolo]; //undefined se !Key
-    if (v === undefined)
-        throw new Error("Operazione non supportata: " + simbolo)
+    if (v === undefined) throw new Error("Operazione non supportata: " + simbolo)
     return v;
 }
 
