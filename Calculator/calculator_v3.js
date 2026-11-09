@@ -7,12 +7,13 @@ const multBtn = document.getElementById("multBtn")
 
 const op = document.getElementById("operation");
 const resElem = document.getElementById("result")
+const msgElem = document.getElementById("error")
 
 let interval;
 
 //JS OBJ = hashmap -> K,V
 const operations = {
-   '+': (a, b) => a + b,
+    '+': (a, b) => a + b,
     '-': (a, b) => a - b,
     '*': (a, b) => a * b,
     '/': (a, b) => {
@@ -23,18 +24,41 @@ const operations = {
         if (b === 0) throw new Error("Denominator is zero.")
         return a % b
     },
+    '**': (a, b) => a ** b,
     'max': (a, b) => a > b ? a : b,
     'min': (n, m) => Math.min(n, m),
     'media': (a, b) => (a + b) / 2
 }
 
+const LIMIT = 1000000
+const regole = [
+    (t1, t2) => {
+        if (t1 === "" || t2 === "") throw new Error("Inserire entrambi i numeri")
+    },
+    (t1, t2) => {
+        if (t1 > LIMIT || t1 < -LIMIT || t2 > LIMIT || t2 < -LIMIT) throw new Error("Numeri troppo grandi")
+        //*Soluzione alternativa più leggibile.
+        //*if (Math.abs(t1) > LIMIT || Math.abs(t2) > LIMIT) throw new Error("Numeri troppo grandi")
+    }
+]
+
+/*
+* Attenzione all'ordine di dichiarazione: function vs const
+*/
 const keyMap = {
     Enter: update,
     Escape: () => {
-        n1Elem.value = "" 
-        n2Elem.value = "" 
+        n1Elem.value = ""
+        n2Elem.value = ""
+        resElem.textContent = ""
+        msgElem.textContent = ""
     }
 }
+
+function valida(regole, t1, t2) {
+    for (const regola of regole) regola(t1, t2)
+}
+
 
 function keyManager(keyMap) {
     return (e) => {
@@ -44,16 +68,17 @@ function keyManager(keyMap) {
 }
 
 function executeOp(a, simbolo, b) {
-    //prendere primo numero
-    const n1 = Number(n1Elem.value)
-    const n2 = Number(n2Elem.value)
-
     try {
-        //const res = format(n1, simbolo, b, compute(operations[simbolo], n1, n2))
-        const res = compute(operations[simbolo], n1, n2)
-        resElem.textContent = format(n1, simbolo, b, res)
+        valida(regole, a, b)
+        const n1 = Number(a)
+        const n2 = Number(b)
+        const res = compute(scegliOperazione(simbolo), n1, n2)
+        //Puliamo il box prima di assegnare il nuovo risultato/errore
+        msgElem.textContent = ""
+        resElem.textContent = format(n1, simbolo, n2, res)
     } catch (err) {
-        resElem.textContent = err.message
+        resElem.textContent = ""
+        msgElem.textContent = err.message
     }
 }
 
@@ -63,8 +88,7 @@ function forOperation(sym) {
     }
 }
 
-subBtn.addEventListener("click", forOperation(subBtn.textContent))
-sumBtn.addEventListener("click", forOperation(sumBtn.textContent))
+
 
 function scegliOperazione(simbolo) {
     const v = operations[simbolo]; //undefined se !Key
@@ -95,6 +119,10 @@ n1Elem.addEventListener("input", update)
 n2Elem.addEventListener("input", update)
 
 document.addEventListener("keydown", keyManager(keyMap))
+
+subBtn.addEventListener("click", forOperation(subBtn.textContent))
+sumBtn.addEventListener("click", forOperation(sumBtn.textContent))
+multBtn.addEventListener("click", forOperation(multBtn.textContent))
 
 //Eseguo quando HTML è renderizzato
 document.addEventListener("DOMContentLoaded", () => {
