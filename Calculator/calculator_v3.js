@@ -8,6 +8,7 @@ const multBtn = document.getElementById("multBtn")
 const op = document.getElementById("operation");
 const resElem = document.getElementById("result")
 const msgElem = document.getElementById("error")
+const helpElem = document.getElementById("help")
 
 let interval;
 
@@ -55,6 +56,31 @@ const keyMap = {
     }
 }
 
+// id : txt
+const txtHelper = {
+    n1: "Inserisci primo numero"
+    //
+}
+
+const opoerationsHelper = {
+    "+": "Somma tra due numeri"
+}
+
+function textManager(txtMap, keyOf, show) {
+    //e = eventObject
+    return (e) => {
+        //con che chiave accedo alla map?
+        //1) keyOf(e.target) = id di target
+        //2) txtMap[ (1) ] => restituisce str
+        //3) show => mostra (2)
+        show(txtMap[keyOf(e)])
+    }
+}
+
+const v = textManager(txtHelper, (e) => e.target.id, (txt) => helpElem.textContent = txt)
+n1Elem.addEventListener("focus", v)
+n1Elem.addEventListener("blur", () => helpElem.textContent = "")
+
 function valida(regole, t1, t2) {
     for (const regola of regole) regola(t1, t2)
 }
@@ -66,6 +92,7 @@ function keyManager(keyMap) {
         if (userAction !== undefined) userAction()
     }
 }
+
 
 function executeOp(a, simbolo, b) {
     try {
@@ -132,6 +159,21 @@ document.addEventListener("DOMContentLoaded", () => {
     setTimeout(() => console.log("qui"), 2000)
     //interval = setInterval(() => console.log("repetion"), 500)
 })
+
+/*function describeOperation(e) {
+    e.preventDefault()
+    const v = textManager(opoerationsHelper, (e) => e.target.textContent, (txt) => helpElem.textContent = txt)
+    v(e)
+}
+*/
+
+const opDescriptor = textManager(opoerationsHelper, (e) => e.target.textContent, (txt) => helpElem.textContent = txt)
+function describeOperation(e) {
+    e.preventDefault()
+    opDescriptor(e)
+}
+
+sumBtn.addEventListener("contextmenu", describeOperation)
 
 n1Elem.addEventListener("input", (e) => {
     let v = e.target.value
