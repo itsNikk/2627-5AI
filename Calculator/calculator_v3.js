@@ -58,8 +58,8 @@ const keyMap = {
 
 // id : txt
 const txtHelper = {
-    n1: "Inserisci primo numero"
-    //
+    n1: "Inserisci primo numero",
+    n2: "Inserisci secondo numero"
 }
 
 const opoerationsHelper = {
@@ -80,6 +80,8 @@ function textManager(txtMap, keyOf, show) {
 const v = textManager(txtHelper, (e) => e.target.id, (txt) => helpElem.textContent = txt)
 n1Elem.addEventListener("focus", v)
 n1Elem.addEventListener("blur", () => helpElem.textContent = "")
+n2Elem.addEventListener("focus", v)
+n2Elem.addEventListener("blur", () => helpElem.textContent = "")
 
 function valida(regole, t1, t2) {
     for (const regola of regole) regola(t1, t2)
