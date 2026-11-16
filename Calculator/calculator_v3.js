@@ -11,6 +11,7 @@ const msgElem = document.getElementById("error")
 const helpElem = document.getElementById("help")
 
 let interval;
+let lastRes = null;
 
 //JS OBJ = hashmap -> K,V
 const operations = {
@@ -63,7 +64,9 @@ const txtHelper = {
 }
 
 const opoerationsHelper = {
-    "+": "Somma tra due numeri"
+    "+": "Somma tra due numeri",
+    "*": "Moltiplicazione tra due numeri",
+    "-": "Differenza tra due numeri",
 }
 
 function textManager(txtMap, keyOf, show) {
@@ -104,6 +107,7 @@ function executeOp(a, simbolo, b) {
         const res = compute(scegliOperazione(simbolo), n1, n2)
         //Puliamo il box prima di assegnare il nuovo risultato/errore
         msgElem.textContent = ""
+        lastRes = res
         resElem.textContent = format(n1, simbolo, n2, res)
     } catch (err) {
         resElem.textContent = ""
@@ -176,6 +180,8 @@ function describeOperation(e) {
 }
 
 sumBtn.addEventListener("contextmenu", describeOperation)
+multBtn.addEventListener("contextmenu", describeOperation)
+subBtn.addEventListener("contextmenu", describeOperation)
 
 n1Elem.addEventListener("input", (e) => {
     let v = e.target.value
@@ -186,3 +192,8 @@ n1Elem.addEventListener("input", (e) => {
     }
 })
 
+resElem.addEventListener("dblclick", () => {
+    if (lastRes === null) return
+    n1Elem.value = lastRes
+    n2Elem.value = ""
+})
